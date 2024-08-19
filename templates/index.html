@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Book</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'contacts')">Contacts</button>
+            <button class="tab-button" onclick="openTab(event, 'add_contact')">Add Contact</button>
+        </div>
+
+        <!-- Contacts Tab -->
+        <div id="contacts" class="tab-content" style="display: block;">
+            <h2>Contact List</h2>
+            <ul>
+                {% for contact in contacts %}
+                    <li>{{ contact.name }} - {{ contact.phone }} - {{ contact.email }}
+                        <a href="{{ url_for('delete_contact', id=contact.id) }}" class="delete-button">Delete</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Add Contact Tab -->
+        <div id="add_contact" class="tab-content">
+            <h2>Add New Contact</h2>
+            <form action="{{ url_for('add_contact') }}" method="POST">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name"><br>
+                <label for="phone">Phone:</label><br>
+                <input type="text" id="phone" name="phone"><br>
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email"><br>
+                <input type="submit" value="Add Contact">
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
